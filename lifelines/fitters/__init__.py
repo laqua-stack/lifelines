@@ -1899,6 +1899,8 @@ class ParametricRegressionFitter(RegressionFitter):
             hessian_ = hessian(self._neg_likelihood_with_penalty_function)(
                 minimum_results.x, Ts, E, weights, entries, utils.DataframeSlicer(Xs)
             )
+            if hessian_.ndim > 2:
+                hessian_.shape= (minimum_results.x.shape[0],-1)
             # See issue https://github.com/CamDavidsonPilon/lifelines/issues/801
             hessian_ = (hessian_ + hessian_.T) / 2
             return (unflatten_array_to_dict(minimum_results.x), -sum_weights * minimum_results.fun, sum_weights * hessian_)
