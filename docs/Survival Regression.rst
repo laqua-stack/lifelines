@@ -185,8 +185,7 @@ Goodness of fit
 
 After fitting, you may want to know how "good" of a fit your model was to the data. A few methods the author has found useful is to
 
- - inspect the survival probability calibration plot (see below section on :ref:`Model probability calibration`)
- - look at the concordance-index (see below section on :ref:`Model selection and calibration in survival regression`), available as :attr:`~lifelines.fitters.coxph_fitter.CoxPHFitter.concordance_index_` or in the :meth:`~lifelines.fitters.coxph_fitter.CoxPHFitter.print_summary` as a measure of predictive accuracy.
+ - look at the concordance-index (see below section on :ref:`Model Selection in Survival Regression`), available as :attr:`~lifelines.fitters.coxph_fitter.CoxPHFitter.concordance_index_` or in the :meth:`~lifelines.fitters.coxph_fitter.CoxPHFitter.print_summary` as a measure of predictive accuracy.
  - look at the log-likelihood test result in the :meth:`~lifelines.fitters.coxph_fitter.CoxPHFitter.print_summary` or :meth:`~lifelines.fitters.coxph_fitter.CoxPHFitter.log_likelihood_ratio_test`
  - check the proportional hazards assumption with the :meth:`~lifelines.fitters.coxph_fitter.CoxPHFitter.check_assumptions` method. See section later on this page for more details.
 
@@ -211,7 +210,7 @@ After fitting, you can use use the suite of prediction methods: :meth:`~lifeline
 Penalties and sparse regression
 -----------------------------------------------
 
-It's possible to add a penalizer term to the Cox regression as well. One can use these to i) stabilize the coefficients, ii) shrink the estimates to 0, iii) encourages a Bayesian viewpoint, and iv) create sparse coefficients. All regression models, including the Cox model, include both an L1 and L2 penalty:
+It's possible to add a penalizer term to the Cox regression as well. One can use these to i) stabilize the coefficients, ii) shrink the estimates to 0, iii) encourages a Bayesian viewpoint, and iv) create sparse coefficients. Regression models, including the Cox model, include both an L1 and L2 penalty:
 
 .. math:: \frac{1}{2} \text{penalizer} \left((1-\text{l1_ratio}) \cdot ||\beta||_2^2 + \text{l1_ratio} \cdot ||\beta||_1\right)
 
@@ -234,7 +233,8 @@ To use this in *lifelines*, both the ``penalizer`` and ``l1_ratio`` can be speci
     cph.print_summary()
 
 
-Instead of a float, an *array* can be provided that is the same size as the number of penalized parameters. The values in the array are specific penalty coefficients for each covariate. This is useful for more complicated covariate structure. Some examples:
+Instead of a float, an *array* can be provided that is the same size as the number of estimated parameters. The values in the array
+are specific penalty coefficients for each covariate. This is useful for more complicated covariate structure. Some examples:
 
 1. you have lots of confounders you wish to penalizer, but not the main treatment(s).
 
@@ -1296,8 +1296,13 @@ allows you to specify what :math:`s` is per subject. Below we predict the remain
 
 .. code:: python
 
+<<<<<<< HEAD
     # all regression models can be used here, WeibullAFTFitter is used for illustration
     wf = WeibullAFTFitter().fit(rossi, "week", "arrest")
+=======
+    # all regression models can be used here, Cox is used for illustration
+    cph = CoxPHFitter().fit(rossi, "week", "age")
+>>>>>>> parent of 77c4de5... some doc updates
 
     # filter down to just censored subjects to predict remaining survival
     censored_subjects = rossi.loc[~rossi['arrest'].astype(bool)]
