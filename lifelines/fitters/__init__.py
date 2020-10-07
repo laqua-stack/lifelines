@@ -523,6 +523,9 @@ class ParametricUnivariateFitter(UnivariateFitter):
                 sol = utils._to_1d_array(minimizing_results.x)
                 # pylint: disable=no-value-for-parameter
                 hessian_ = hessian(negative_log_likelihood)(sol, Ts, E, entry, weights)
+                # sometimes the hessian is not a matrix, but has 3 dims with an empty one @TODO report as issue
+                if hessian_.ndim > 2:
+                    hessian_.shape = (minimum_results.x.shape[0], -1)
                 # see issue https://github.com/CamDavidsonPilon/lifelines/issues/801
                 hessian_ = (hessian_ + hessian_.T) / 2
                 return sol, -minimizing_results.fun * weights.sum(), hessian_ * weights.sum()
