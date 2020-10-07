@@ -998,8 +998,12 @@ def test_rmst_exactely_with_known_solution():
 @flaky
 def test_rmst_approximate_solution():
 <<<<<<< HEAD
+<<<<<<< HEAD
 
     T = np.random.exponential(2, 2000)
+=======
+    T = np.random.exponential(2, 5000)
+>>>>>>> parent of 519bd3a... Merge pull request #1140 from CamDavidsonPilon/v0.25.5
 =======
     T = np.random.exponential(2, 5000)
 >>>>>>> parent of 519bd3a... Merge pull request #1140 from CamDavidsonPilon/v0.25.5
